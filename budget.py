@@ -81,7 +81,7 @@ def home_page(day=None):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
     # db = BudgetDB(expenses=expenses, categories=categories)
     # print(db.sum_all_categories_on_month())
     # db.insert_category('Jedzenie')
