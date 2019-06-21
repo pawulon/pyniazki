@@ -1,0 +1,92 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Verdana,sans-serif;
+}
+
+#main {
+    min-height: 100%;
+    background-color: bisque;
+    padding: 50px 100px 50px 100px;
+}
+
+#main_content {
+    background-color: snow;
+    margin: 0;
+    padding: 5%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#main_content h1 {
+    margin: 0;
+    float: left;
+}
+
+#navigation_buttons {
+    float: right;
+    margin-top: 5px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+
+    border-bottom: 0px;
+}
+
+th {
+    padding: 60px 8px 8px 8px;
+    text-align: left;
+    border-top: 2px solid #323232;
+}
+
+#summary_table th {
+    padding-top: 12px;
+}
+
+
+td {
+    padding: 8px;
+    text-align: left;
+    border-top: 1px solid #ddd;
+}
+
+.button-row td {
+    text-align: right;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+.total {
+    font-weight: bold;
+}
+
+
+.total td {
+    border-bottom: 0px;
+    border-top: 1px dashed #ddd;
+    padding-top: 20px;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 3px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+.green {background-color: #4CAF50;}
+.red {background-color: #f44336;}
+.gray {background-color: gray}
+
+#month_summary {
+    margin-top: 40px;
+    /*border-top: 2px solid #323232;*/
+}
