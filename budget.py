@@ -5,7 +5,7 @@ from flask_pymongo import PyMongo
 from db import BudgetDB
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://192.168.1.20:27017/budget_db'
+app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/budget_db'
 mongo = PyMongo(app)
 expenses = mongo.db.expenses
 categories = mongo.db.categories
