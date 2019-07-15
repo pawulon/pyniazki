@@ -4,6 +4,8 @@ from typing import Dict
 
 from bson import ObjectId
 
+from utils import round_float
+
 
 class BudgetDB:
     def __init__(self, expenses, categories):
@@ -27,7 +29,7 @@ class BudgetDB:
                 {'$group': {'_id': None, 'total': {'$sum': '$value'}}}]
         results = self.expenses.aggregate(pipeline=pipe)
         try:
-            return results.next()['total']
+            return round_float(results.next()['total'])
         except StopIteration:
             return 0
 
@@ -41,7 +43,8 @@ class BudgetDB:
         categories_values = {}
         for category in categories:
             category_name = category['name']
-            categories_values[category_name] = self.sum_category_expenses_on_month(category_name, date)
+            if not self.is_category_empty(category_name):
+                categories_values[category_name] = self.sum_category_expenses_on_month(category_name, date)
         return categories_values
 
     def sum_category_expenses_on_month(self, category: str, date: datetime = None) -> float:
@@ -59,7 +62,14 @@ class BudgetDB:
             return 0
 
     def delete_expense(self, id: str):
+        expense_name = self.get_expense_name(id)
         self.expenses.delete_one({'_id': ObjectId(id)})
+        if self.is_category_empty(expense_name):
+            self.delete_category(expense_name)
+
+    def get_expense_name(self, id: str):
+        expense = self.expenses.find_one({'_id': ObjectId(id)})
+        return expense['name']
 
     def get_expenses_on_date(self, date: datetime = None):
         if date is None:
@@ -86,3 +96,9 @@ class BudgetDB:
             return True
         else:
             return False
+
+    def is_category_empty(self, name):
+        if self.expenses.find_one({'name': name}):
+            return False
+        else:
+            return True

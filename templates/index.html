@@ -24,31 +24,32 @@ function checkKey(e) {
 </head>
 <body>
 <div id="main">
+    {% if error %}
+    <h2>{{ error }}</h2>
+    {% endif %}
     <div id="main_content">
-
         <div id="today">
             <h1>{{ date_formatted }}</h1>
+
             <table class="budget_table">
-                <thead>
-                    <tr>
-                        <th>Kategoria</th>
-                        <th>Wartość</th>
-                        <th></th>
-                    </tr>
-                </thead>
                 <tbody>
+                    <tr class="header bold">
+                        <td colspan="3">Wydatki</td>
+                    </tr>
                     <tr>
                         <form method=post action="/add_expense">
                             <td>
                                 <input type="hidden" name="date_string" value="{{ date_string }}">
-                                <input type="text" list="categories" name="name"/>
-                                <datalist id="categories">
-                                {% for category in categories %}
-                                    <option>{{ category['name'] }}</option>
-                                {% endfor %}
-                                </datalist>
+                                <div class="td_input">
+                                    <input type="text" list="categories" name="name" placeholder="Kategoria"/>
+                                    <datalist id="categories">
+                                    {% for category in categories %}
+                                        <option>{{ category['name'] }}</option>
+                                    {% endfor %}
+                                    </datalist>
+                                </div>
                             </td>
-                            <td><input name="value"></td>
+                            <td><div class="td_input"><input name="value" placeholder="Wartość"></div></td>
                             <td class="button-row">
                                 <button class="button green">Dodaj</button>
                             </td>
@@ -60,12 +61,33 @@ function checkKey(e) {
                         <td>{{ expense['value'] }} zł</td>
                         <td class="button-row">
                             <form method=post action="/delete_expense/{{ expense['_id'] }}">
+                                <input type="hidden" name="date_string" value="{{ date_string }}">
                                 <button class="button red">Usuń</button>
                             </form>
                         </td>
                     </tr>
                 {% endfor %}
-                    <tr class="total">
+                    <tr class="header bold">
+                        <td colspan="3">Przychody</td>
+                    </tr>
+                    <tr>
+                        <form method=post action="/add_expense">
+                            <td>
+                                <input type="hidden" name="date_string" value="{{ date_string }}">
+                                <input type="text" list="categories" name="name" placeholder="Kategoria"/>
+                                <datalist id="categories">
+                                    {% for category in categories %}
+                                    <option>{{ category['name'] }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            </td>
+                            <td><input name="value" placeholder="Wartość"></td>
+                            <td class="button-row">
+                                <button class="button green">Dodaj</button>
+                            </td>
+                        </form>
+                    </tr>
+                    <tr class="total bold">
                         <td>Cuzamen do kupy:</td>
                         <td>{{ total }} zł</td>
                         <td></td>
@@ -73,6 +95,8 @@ function checkKey(e) {
                 </tbody>
             </table>
         </div>
+    </div>
+    <div id="main_content">
         <div id="month_summary">
             <h3>Podsumowanie miesiąca</h3>
             <table id="summary_table">
@@ -86,6 +110,14 @@ function checkKey(e) {
                     </td>
                 </tr>
                 {% endfor %}
+                <tr class="total bold">
+                    <td>
+                        Razem:
+                    </td>
+                    <td>
+                        {{ month_total }}
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
